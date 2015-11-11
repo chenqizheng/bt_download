@@ -96,23 +96,29 @@ if __name__ == '__main__':
         boradId = sys.argv[1]
         page = sys.argv[2]
     content = l.getArticleList(boradId,page)
-    print content
+    #print content
     bParser = ArticleListParser()
     bParser.feed(content)
     bParser.close()
     links = bParser.links
     for link in links :
-        detailContent = l.getArticleDetail(link)
-        aParser = ArticleDetailParser()
-        aParser.feed(detailContent)
-        aParser.close()
-        print aParser.article.name
-        index = aParser.article.name.find(',')
-        index1 = aParser.article.name.find('哈希校验：')
-        if index == -1 or index1 == -1:
-            continue
-        writeFile('bt_'+ str(boradId) + '_' + str(page) +'.txt',aParser.article.name[:index].replace('种子名称：',"") + " ")
-        writeFile('bt_'+ str(boradId) + '_' + str(page) +'.txt',aParser.article.name[index1:].replace('哈希校验：','magnet:?xt=urn:btih:') + "\n")
+        try:
+            detailContent = l.getArticleDetail(link)
+            aParser = ArticleDetailParser()
+            print link
+            aParser.feed(detailContent)
+            aParser.close()
+            #print aParser.article.name
+            index = aParser.article.name.find(',')
+            index1 = aParser.article.name.find('哈希校验：')
+            if index == -1 or index1 == -1:
+                pass
+            writeFile('bt_'+ str(boradId) + '_' + str(page) +'.txt',aParser.article.name[:index].replace('种子名称：',"") + " ")
+            writeFile('bt_'+ str(boradId) + '_' + str(page) +'.txt',aParser.article.name[index1:].replace('哈希校验：','magnet:?xt=urn:btih:') + "\n")
+        except Exception , e:
+            print '编码错误'
+            print link
+            pass
     print 'finish'
 
         
