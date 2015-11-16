@@ -113,7 +113,7 @@ if __name__ == '__main__':
             index1 = aParser.article.name.find('哈希校验：')
             if index == -1 or index1 == -1:
                 pass
-            writeFile('bt_'+ str(boradId) + '_' + str(page) +'.txt',aParser.article.name[:index].replace('种子名称：',"") + " ")
+            writeFile('bt_'+ str(boradId) + '_' + str(page) +'.txt',aParser.article.name[:index].replace('种子名称：',"") + "∆")
             writeFile('bt_'+ str(boradId) + '_' + str(page) +'.txt',aParser.article.name[index1:].replace('哈希校验：','magnet:?xt=urn:btih:') + "\n")
         except Exception , e:
             print '编码错误'
